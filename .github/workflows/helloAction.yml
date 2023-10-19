@@ -14,9 +14,8 @@ jobs:
         node-version: [16.x]
     steps:
       - uses: actions/checkout@v2
-      - name: Make configure script executable
-  run: chmod +x ./Configure
-
+ - name: Make configure script executable
+        run: chmod +x ./configure
       - name: Configure
         run: ./Configure
       - name: Make
