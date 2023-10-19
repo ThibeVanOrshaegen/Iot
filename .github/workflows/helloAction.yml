@@ -17,7 +17,7 @@ jobs:
       - name: Make configure script executable
         run: chmod +x ./configure
       - name: Configure
-        run: ./Configure
+        run: ./configure
       - name: Make
         run: make
       - name: Test
