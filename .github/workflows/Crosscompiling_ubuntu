@@ -1,0 +1,47 @@
+name: Cross compile c/cpp code CI
+
+on:
+  push:
+    branches:
+      -  main
+  pull_request:
+    branches:
+      -  main
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v2
+      
+    - name: install Arm cross compiler
+      run: sudo apt-get update
+      
+    - name: install Arm cross compiler for c
+      run: sudo apt install --yes {gcc,binutils}-arm-linux-gnueabihf 
+      
+    - name: install Arm cross compiler for cpp
+      run: sudo apt install --yes {g++,binutils}-arm-linux-gnueabihf 
+       
+    - name: compile code
+      run: arm-linux-gnueabihf-gcc -o out.exe HelloWorld.c || true 
+
+    - name: compile code
+      run: arm-linux-gnueabihf-g++ -o out.exe HelloWorld.cpp || true 
+          
+    - name: dir for atrifacts
+      run: mkdir -p artifacts
+
+    - name: mov .exe to folder
+      run: mv out.exe artifacts/
+
+    - name: Upload executable
+      uses: actions/upload-artifact@v2
+      with:
+        name: out.exe
+        path: artifacts/
+        
+    - name: check compiled file
+      run: file artifacts/out.exe
