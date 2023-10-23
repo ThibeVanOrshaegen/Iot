@@ -20,3 +20,9 @@ jobs:
         run: ./configure
       - name: Make
         run: make
+      - name: Uploads executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: out.exe
+          path: out.exe
+        
